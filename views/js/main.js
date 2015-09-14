@@ -450,10 +450,21 @@ var resizePizzas = function(size) {
 
   // Iterates through pizza elements on the page and changes their widths
   function changePizzaSizes(size) {
-    for (var i = 0; i < document.querySelectorAll(".randomPizzaContainer").length; i++) {
-      var dx = determineDx(document.querySelectorAll(".randomPizzaContainer")[i], size);
-      var newwidth = (document.querySelectorAll(".randomPizzaContainer")[i].offsetWidth + dx) + 'px';
-      document.querySelectorAll(".randomPizzaContainer")[i].style.width = newwidth;
+	//Here we were querying the DOM twice per iteration. Moving the query to before the 
+	//for loop and saving the value to a variable array
+	var elems = document.querySelectorAll(".randomPizzaContainer");
+	
+	//The width is always the same for all elements, so there is no need to calculate
+	//it for each element. Let's just the get the width of the first element and 
+	//calculate the new width from there
+	var elem = elems[0];
+	var dx = determineDx(elem, size);
+	var newwidth = (elem.offsetWidth + dx) + 'px';
+
+	//Now, we get the number of elements by getting the length property of the array "elems"
+    for (var i = 0; i < elems.length; i++) {
+	  //and we assign the new width to each element of the array
+      elems[i].style.width = newwidth;
     }
   }
 
@@ -502,9 +513,14 @@ function updatePositions() {
   frame++;
   window.performance.mark("mark_start_frame");
 
-  var items = document.querySelectorAll('.mover');
+  //The value of document.body.scrollTop is constant here
+  //so we can capture it once and reuse the value later
+  var x = (document.body.scrollTop / 1250);
+  
   for (var i = 0; i < items.length; i++) {
-    var phase = Math.sin((document.body.scrollTop / 1250) + (i % 5));
+    //Here we use the value we captured earlier and avoid
+	//doing the same calculation repeatedly for each iteration
+	var phase = Math.sin(x + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
   }
 
@@ -521,6 +537,13 @@ function updatePositions() {
 // runs updatePositions on scroll
 window.addEventListener('scroll', updatePositions);
 
+// Create an array to hold our pizzas
+// We will need this array in other places of the script
+// so we get all the elements once and remove all the references
+// where the DOM was queried to get these elements each time
+// it was needed.
+var items = [];
+
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
@@ -533,6 +556,10 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
+	
+	//Add the new pizza element to the items array we created 
+	//above so we can use the items array later
+	items[i] = elem;
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
   updatePositions();
