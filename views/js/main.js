@@ -548,19 +548,54 @@ var items = [];
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
   var s = 256;
-  for (var i = 0; i < 200; i++) {
+
+  //Instead of creating a fixed number of pizzas
+  //we are going to create pizzas until we fill the screen
+  //For that purpose, we save the height of the window,
+  //save the height were the current element will be placed
+  //and create a counter for each element that is created
+
+  //Here we will save the current window height
+  var winHeight = window.innerHeight;
+
+  //this is where we will save the current location in the 
+  //window height
+  var elemTop = 0;
+
+  //This variable will keep track of the current element
+  //being created. This will be used to populate the items array
+  //created before
+  var i = 0;
+
+  //instead of a for-loop, we will loop until we reach
+  //the bottom of the screen
+  while(elemTop < winHeight) {
+
+    //save where in the screen we are now
+    elemTop = (Math.floor(i / cols) * s);
+
     var elem = document.createElement('img');
     elem.className = 'mover';
     elem.src = "images/pizza.png";
     elem.style.height = "100px";
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
-    elem.style.top = (Math.floor(i / cols) * s) + 'px';
+
+    //We don't need to calculate the vertical location
+    //instead we use the value we saved earlier in the
+    //elemTop variable
+    elem.style.top = elemTop + 'px';
 	
-	//Add the new pizza element to the items array we created 
-	//above so we can use the items array later
-	items[i] = elem;
+  	//Add the new pizza element to the items array we created 
+  	//above so we can use the items array later
+  	items[i] = elem;
+
+    //get ready for the next iteration
+    i++;
+
     document.querySelector("#movingPizzas1").appendChild(elem);
   }
+
   updatePositions();
 });
+

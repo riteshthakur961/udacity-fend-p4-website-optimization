@@ -8,21 +8,33 @@ module.exports = function(grunt) {
 	                cssmin: true,
 	                uglify: true
 	            },
-	            src: 'index.html',
-	            dest: 'dist/index.html'
+	            src: [
+	            'index.html',
+	            'project-2048.html',
+	            'project-mobile.html',
+	            'project-webperf.html', 
+	            'views/pizza.html'
+	            ],
+	            dest: 'dist/'
 	        }
 	    },
 	    copy: {
 	    	main: {
 	    		files: [{
-	    			src: 'views/images/pizzeria.jpg',
-	    			dest: 'dist/views/images/pizzeria.jpg'
+	    			expand: true,
+	    			src: 'views/images/*',
+	    			dest: 'dist/'
 	    		},
 	    		{
 	    			expand: true,
 	    			src: ['img/*'],
 	    			dest: 'dist/'
-	    		}]
+	    		},
+	    		{
+	    			src: 'js/perfmatters.js',
+	    			dest: 'dist/'
+	    		}
+	    		]
 	    	}
 	    },
 
