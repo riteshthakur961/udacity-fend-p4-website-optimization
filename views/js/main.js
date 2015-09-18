@@ -452,7 +452,7 @@ var resizePizzas = function(size) {
   function changePizzaSizes(size) {
 	//Here we were querying the DOM twice per iteration. Moving the query to before the 
 	//for loop and saving the value to a variable array
-	var elems = document.querySelectorAll(".randomPizzaContainer");
+	var elems = document.getElementsByClassName("randomPizzaContainer");
 	
 	//The width is always the same for all elements, so there is no need to calculate
 	//it for each element. Let's just the get the width of the first element and 
@@ -480,9 +480,9 @@ var resizePizzas = function(size) {
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
+var pizzasDiv = document.getElementById("randomPizzas");
 for (var i = 2; i < 100; i++) {
-  var pizzasDiv = document.getElementById("randomPizzas");
-  pizzasDiv.appendChild(pizzaElementGenerator(i));
+   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
 
 // User Timing API again. These measurements tell you how long it took to generate the initial pizzas
@@ -518,7 +518,7 @@ function updatePositions() {
   var x = (document.body.scrollTop / 1250);
   
   for (var i = 0; i < items.length; i++) {
-    //Here we use the value we captured earlier and avoid
+  //Here we use the value we captured earlier and avoid
 	//doing the same calculation repeatedly for each iteration
 	var phase = Math.sin(x + (i % 5));
     items[i].style.left = items[i].basicLeft + 100 * phase + 'px';
