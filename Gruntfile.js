@@ -15,39 +15,43 @@ module.exports = function(grunt) {
 	            'project-webperf.html', 
 	            'views/pizza.html'
 	            ],
-	            dest: 'dist/'
+	            dest: './'
 	        }
 	    },
+	    htmlmin: {                                
+		    dist: {                             
+			    options: {
+			      removeComments: true,
+			      collapseWhitespace: true
+			    },
+			    files: {
+			      'dist/index.html': 'index.html',
+		          'dist/project-2048.html': 'project-2048.html',
+		          'dist/project-mobile.html': 'project-mobile.html',
+		          'dist/project-webperf.html': 'project-webperf.html', 
+		          'dist/views/pizza.html': 'views/pizza.html'
+			    }
+		    }
+		},
 	    copy: {
 	    	main: {
-	    		files: [{
-	    			expand: true,
-	    			src: 'views/images/*',
-	    			dest: 'dist/'
-	    		},
-	    		{
-	    			expand: true,
-	    			src: ['img/*'],
-	    			dest: 'dist/'
-	    		},
-	    		{
-	    			src: 'js/perfmatters.js',
-	    			dest: 'dist/'
-	    		}
+	    		files: [
+		    		{
+		    			src: 'js/perfmatters.js',
+		    			dest: 'dist/'
+		    		}
 	    		]
 	    	}
-	    },
+	    }
 
 	});
 
-
-
-	//Load the inline plugin that inlines and minifies resource files
+	//Load plugins
 	grunt.loadNpmTasks('grunt-inline');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-
+	grunt.loadNpmTasks('grunt-contrib-htmlmin');
 
 	// Default task(s)
-	grunt.registerTask('default', ['inline', 'copy']);
+	grunt.registerTask('default', ['inline', 'htmlmin', 'copy']);
 
 };
