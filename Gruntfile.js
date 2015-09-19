@@ -33,6 +33,19 @@ module.exports = function(grunt) {
 			    }
 		    }
 		},
+	    tinyimg: {		      
+		      dynamic: {
+		        files: [{
+		          expand: true,
+		          cwd: './', 
+		          src: [
+		          'views/images/*.{png,jpg,svg}', 
+		          'img/*.{png,jpg}'
+		          ],
+		          dest: 'dist/'
+		        }]
+		      }
+	    },
 	    copy: {
 	    	main: {
 	    		files: [
@@ -50,8 +63,9 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-inline');
 	grunt.loadNpmTasks('grunt-contrib-copy');
 	grunt.loadNpmTasks('grunt-contrib-htmlmin');
+	grunt.loadNpmTasks('grunt-tinyimg');
 
 	// Default task(s)
-	grunt.registerTask('default', ['inline', 'htmlmin', 'copy']);
+	grunt.registerTask('default', ['inline', 'htmlmin', 'tinyimg', 'copy']);
 
 };
