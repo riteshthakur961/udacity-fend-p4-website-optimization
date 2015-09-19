@@ -16,6 +16,9 @@ The optimizations performed:
 * Inline of css and js files
 * Modify the analytics script to run asynchronously
 * Use the WebFont loader
+* Minify all html files
+* Resize views/images/pizzeria.jpg
+* Optimize all images using Grunt tinyimg plugin
 
 
 ####Part 2: Optimize Frames per Second in pizza.html
