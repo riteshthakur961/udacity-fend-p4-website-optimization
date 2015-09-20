@@ -19,6 +19,8 @@ The optimizations performed:
 * Minify all html files
 * Resize views/images/pizzeria.jpg
 * Optimize all images using Grunt tinyimg plugin
+* Created views/images/pizzeria_thumb.jpg with width=100px to be used on index.html
+* Modified index.html to use thumbnail image that when compressed will load faster than larger image needed for views/pizza.html
 
 
 ####Part 2: Optimize Frames per Second in pizza.html
